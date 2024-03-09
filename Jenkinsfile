@@ -1,28 +1,36 @@
 pipeline {
     agent any
-
+    
     stages {
         stage('Build') {
             steps {
-                // Since you're calling another Jenkins job 'PES1UG22CS809-1', use 'build' step to trigger it
-                build job: 'PES1UG22CS809-1', wait: true // 'wait: true' ensures that this pipeline waits for the completion of the triggered job
-                sh 'g++ main.cpp -o output' // Compile the code using g++
+                // Compile the .cpp file using shell script
+                script {
+                    sh 'g++ -o my_program Harshith_Reddy_C PES1UG22CS809.cpp'
+                }
             }
         }
+        
         stage('Test') {
             steps {
-                sh './out' // Execute the compiled program
+                // Print output of .cpp file using shell script
+                script {
+                    sh './my_program'
+                }
             }
         }
+        
         stage('Deploy') {
             steps {
-                echo 'Deploying...' // Corrected 'ech' to 'echo'
+                // Deployment steps (if any)
+                echo 'Deployment steps...'
             }
         }
     }
-
+    
     post {
         failure {
-            error 'Pipeline failed'
+            echo 'Pipeline failed'
         }
+    }
 }
