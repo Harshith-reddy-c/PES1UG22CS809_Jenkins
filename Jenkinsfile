@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh './output' // Execute the compiled program
+                sh './out' // Execute the compiled program
             }
         }
         stage('Deploy') {
